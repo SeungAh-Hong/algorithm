@@ -1,4 +1,4 @@
-# 12015  긴 증가하는 부분 수열 2
+# 12015 가장 긴 증가하는 부분 수열 2 
 ## 이분탐색 이용 -> 시간복잡도 O(nlogn)
 from bisect import bisect_left
 
