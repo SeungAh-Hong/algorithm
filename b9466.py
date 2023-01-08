@@ -1,6 +1,8 @@
 # 9466 텀 프로젝트 (그래프 탐색)
 
 import sys
+sys.setrecursionlimit(10**6)
+
 input = sys.stdin.readline
 
 ## 사이클에 포함되지 않는 인원 구하기
@@ -9,7 +11,7 @@ input = sys.stdin.readline
 # ==> 맨 처음 시작 학생과 만난다면 사이클에 해당하므로 cycle에 추가
 def DFS(start, end):
     global cycle ## 사이클에 포함되는 인원 구함
-    cycle.add(start)
+    cycle.append(start)
     for i in range(1, n+1):
         if graph[start][i] == 1 and check[i] == 0:
             check[i] = 1
@@ -43,7 +45,7 @@ for test in range(tc):
 
     for start in range(1, n+1):
         get_checklist(check)
-        cycle = set() ## 학생 한 번마다 cycle 초기화
+        cycle = [] ## 학생 한 번마다 cycle 초기화
         DFS(start, start) ## 시작번호부터 쭉 사이클 돌기
 
     ans = n - len(r_cycle)
