@@ -1,6 +1,6 @@
 import sys
 input = sys.stdin.readline
-INF = 100001 # 비용은 해당 값보다 작거나 같은 자연수
+INF = int(1e9) # 10억으로 설정
 
 # 노드의 개수 및 간선의 개수를 입력받기
 n = int(input())
