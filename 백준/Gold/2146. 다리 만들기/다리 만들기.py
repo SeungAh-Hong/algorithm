@@ -6,8 +6,8 @@ input = sys.stdin.readline
 N = int(input())
 islands = [list(map(int, input().split())) for _ in range(N)]
 
-dx = [1, -1, 0, 0]
-dy = [0, 0, 1, -1]
+dx = [0,0,-1,1]
+dy = [1,-1,0,0]
 
 def indexing_island(x, y):
     q = deque()
@@ -22,45 +22,40 @@ def indexing_island(x, y):
                 visited[nx][ny] = True
                 q.append([nx, ny])
 
-def find_island(z):
-    global answer
-    dist = [[-1]*N for _ in range(N)]
-    q = deque()
-
-    for i in range(N):
-        for j in range(N):
-            if islands[i][j] == z:
-                q.append([i, j])
-                dist[i][j] = 0
-    
+def find_island(i, j, cnt):
+    q=deque()
+    first_val = islands[i][j]
+    q.append([i, j, cnt])
     while q:
-        x, y = q.popleft()
+        x, y, cnt = q.popleft()
+        check[x][y] = 1
         for i in range(4):
             nx = dx[i]+x
             ny = dy[i]+y
-            if 0<=nx<N and 0<=ny<N and dist[nx][ny] == -1:
-                # 다른 땅
-                if islands[nx][ny] != z and islands[nx][ny] < 0:
-                    answer = min(answer, dist[x][y])
-                # 바다
-                if islands[nx][ny] == 0:
-                    dist[nx][ny] = dist[x][y] + 1
-                    q.append([nx, ny])
+            # 다른 섬 도착 시
+            if 0<=nx<N and 0<=ny<N and check[nx][ny] == 0 and islands[nx][ny] != first_val:
+                check[nx][ny] = 1
+                if islands[nx][ny] < 0:
+                    return cnt
+                else:
+                    q.append([nx, ny, cnt+1])
+
+    return 1e9
+
 
 idx = -1
 visited = [[False]*N for _ in range(N)]
 for i in range(N):
     for j in range(N):
-        if islands[i][j] == 1 and visited[i][j] == False:
-            visited[i][j] = True
+        if islands[i][j] == 1 and not visited[i][j]:
             indexing_island(i, j)
             idx -= 1
 
 answer = 1e9
-
-for i in range(-1, idx, -1):
-    find_island(i)
-
+for i in range(N):
+    for j in range(N):
+        if islands[i][j] < 0:
+            check = [[0]*N for _ in range(N)]
+            answer = min(answer, find_island(i, j, 0))
 
 print(answer)
-
