@@ -1,5 +1,4 @@
-# 백준 9663 N-Queen (브루트포스, 백트래킹)
-
+# [9663] N-Queen (골드 4)
 import sys
 input = sys.stdin.readline
 N = int(input())
