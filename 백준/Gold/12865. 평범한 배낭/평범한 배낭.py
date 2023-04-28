@@ -1,29 +1,21 @@
-## 12865 평범한 배낭
+# [12865] 평범한 배낭
+import sys
+input = sys.stdin.readline
 
-n, k = map(int, input().split())
+N, K = map(int, input().split())
+wv = [[0,0]]
+for i in range(N):
+    wv.append(list(map(int, input().split())))
 
-sack = [[0,0]] ## 첫 번째는 무조건 (0, 0)
-            # wv에서 비교할 때 이전꺼 비교하니까
-for i in range(n):
-    sack.append(list(map(int, input().split())))
+dp = [[0]*(K+1) for _ in range(N+1)]
+for i in range(1, N+1):
+    for j in range(1, K+1):
+        w = wv[i][0]
+        v = wv[i][1]
 
-# 가로: 1~k까지 가방 무게, 세로: 물건 n개 개수
-wv = [[0]*(k+1) for _ in range(n+1)]
-
-## 현재 배낭의 허용 무게보다 넣을 물건의 무게가 더 크면 넣지 않음
-## 아니면, (배낭-현재 넣을 물건의 무게) 에서 현재 물건을 넣는 경우
-## 현재 물건을 넣지 않고 이전 배낭 그대로 갖고 가는 경우
-## 두 경우를 비교
-
-for i in range(1, n+1): ## 물건 하나 선택 ~ 물건 n개 전부 선택까지의 모든 가치 최대값 구하기 위함
-    for j in range(1, k+1): 
-## i번째 물건 중에서 무게 1부터 최대 허용무게까지 각 무게에서의 가치 최대값 구함
-        w = sack[i][0] ## 현재 물건 무게
-        v = sack[i][1] ## 현재 물건 가치
-
-        if j < w: ## 현재 물건이 허용 무게보다 크면
-            wv[i][j] = wv[i-1][j] # 이전 배낭 그대로 선택 (해당 물건 선택 이전의 같은 무게의 가치 최대값)
+        if j < w:
+            dp[i][j] = dp[i-1][j]
         else:
-            wv[i][j] = max(wv[i-1][j], wv[i-1][j-w]+v)
+            dp[i][j] = max(dp[i-1][j], dp[i-1][j-w]+v)
 
-print(wv[n][k])
+print(dp[N][K])
