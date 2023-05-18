@@ -1,29 +1,28 @@
-# 백준 1697. 숨바꼭질
-import math
+# [1697] 숨바꼭질
 from collections import deque
 
-n, k = map(int, input().split())
-INF = math.inf
+N, K = map(int, input().split())
+INF = 1e9
 time = [0]*(100001)
-time[n] = 0
+time[N] = 0
 
 def BFS(idx):
     queue = deque()
     queue.append(idx)
-    while queue:     
-        if idx == k:
-            return time[k]
+    while queue:
         idx = queue.popleft()
-        if 0 <= idx+1 < 100001 and time[idx+1] == 0:
+        if idx == K:
+            return time[K]
+        if 0<= idx+1 < 100001 and time[idx+1] == 0:
             time[idx+1] = time[idx]+1
             queue.append(idx+1)
         if 0 <= idx-1 < 100001 and time[idx-1] == 0:
             time[idx-1] = time[idx]+1
-            queue.append(idx-1)  
-        if 0 <= 2*idx < 100001 and time[idx*2] == 0:
-            time[2*idx] = time[idx]+1
-            queue.append(2*idx)
+            queue.append(idx-1)
+        if 0<= idx*2 < 100001 and time[idx*2] == 0:
+            time[idx*2] = time[idx]+1
+            queue.append(idx*2)
 
-    return time[k]
+    return time[K]
 
-print(BFS(n))
+print(BFS(N))
