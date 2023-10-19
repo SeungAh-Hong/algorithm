@@ -1,6 +1,5 @@
-SELECT YEAR(B.SALES_DATE) AS YEAR, MONTH(B.SALES_DATE) AS MONTH, A.GENDER, COUNT(DISTINCT(B.USER_ID)) AS USERS
-FROM USER_INFO A 
-JOIN ONLINE_SALE B ON A.USER_ID = B.USER_ID
-WHERE A.GENDER IS NOT NULL
-GROUP BY YEAR(B.SALES_DATE), MONTH(B.SALES_DATE), A.GENDER
-ORDER BY YEAR(B.SALES_DATE), MONTH(B.SALES_DATE), A.GENDER
+select year(b.sales_date) as year, month(b.sales_date) as month, a.gender, count(distinct(a.user_id)) as users
+from user_info a
+join online_sale b ON a.user_id = b.user_id
+group by year, month, a.gender having gender is not null
+order by year, month, a.gender
