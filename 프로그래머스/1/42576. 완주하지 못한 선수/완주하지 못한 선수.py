@@ -7,3 +7,18 @@ def solution(participant, completion):
             return participant[i]
     
     return participant[-1]
+
+## 해시로 풀기
+# def solution(participant, completion):
+#     dictp = {}
+#     sumh = 0
+    
+#     for part in participant:
+#         dictp[hash(part)] = part
+#         sumh += hash(part)
+    
+#     for comp in completion:
+#         sumh -= hash(comp)
+    
+#     return dictp[sumh]
+    
