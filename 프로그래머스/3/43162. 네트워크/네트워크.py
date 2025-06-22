@@ -1,15 +1,18 @@
 def solution(n, computers):
     answer = 0
-    visited = [0] * (n+1)
+    visited = set()
     
-    def DFS(start):
-        visited[start] = 1
+    def dfs(node):
+        visited.add(node)
+        print("node: ", node)
+        print("visited: ", visited)
         for i in range(n):
-            if computers[start][i] == 1 and not visited[i]:
-                DFS(i)
-
+            if i not in visited and computers[node][i] == 1:
+                dfs(i)
+    
     for i in range(n):
-        if not visited[i]:
-            DFS(i)
+        if i not in visited:
+            dfs(i)
             answer += 1
+    
     return answer
